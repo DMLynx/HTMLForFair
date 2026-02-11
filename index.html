@@ -2,150 +2,219 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>For You 💖</title>
+<title>For You 💌</title>
 
 <style>
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: radial-gradient(circle at top, #1a1a2e, #0f0f1a 70%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  overflow: hidden;
-  color: white;
-}
-
-/* ดาวพื้นหลัง */
-.star {
-  position: absolute;
-  width: 2px;
-  height: 2px;
-  background: white;
-  border-radius: 50%;
-  opacity: 0.6;
-  animation: twinkle 3s infinite alternate;
-}
-@keyframes twinkle {
-  from { opacity: 0.2; }
-  to { opacity: 1; }
+body{
+  margin:0;
+  font-family:'Segoe UI',sans-serif;
+  background:linear-gradient(135deg,#1f1f2e,#141421);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  color:white;
+  overflow:hidden;
 }
 
 /* กล่องหลัก */
-.container {
-  background: rgba(255,255,255,0.07);
-  backdrop-filter: blur(20px);
-  width: 90%;
-  max-width: 600px;
-  padding: 50px;
-  border-radius: 25px;
-  text-align: center;
-  box-shadow: 0 0 40px rgba(255,100,150,0.4);
-  transition: 0.6s;
-  position: relative;
+.container{
+  width:90%;
+  max-width:600px;
+  padding:50px;
+  border-radius:20px;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(25px);
+  box-shadow:0 0 50px rgba(255,105,180,0.15);
+  text-align:center;
+  transition:0.5s;
+  position:relative;
 }
 
-/* animation */
-.fade {
-  animation: fade 0.6s ease;
+.fade{
+  animation:fade 0.6s ease;
 }
-@keyframes fade {
-  from { opacity: 0; transform: translateY(20px);}
-  to { opacity: 1; transform: translateY(0);}
-}
-
-h1 {
-  color: #ff6b9a;
-  font-size: 28px;
+@keyframes fade{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:translateY(0);}
 }
 
-p {
-  color: #ddd;
-  font-size: 18px;
+h1{
+  font-size:28px;
+  background:linear-gradient(45deg,#ff6b9a,#ffc3a0);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
 
-button {
-  margin-top: 20px;
-  padding: 12px 25px;
-  border: none;
-  border-radius: 30px;
-  background: linear-gradient(45deg,#ff6b9a,#ff9a9e);
-  color: white;
-  cursor: pointer;
-  font-size: 16px;
-  transition: 0.3s;
+p{
+  color:#ddd;
+  font-size:18px;
 }
-button:hover {
-  transform: scale(1.1);
+
+button{
+  margin-top:30px;
+  padding:12px 30px;
+  border:none;
+  border-radius:30px;
+  background:linear-gradient(45deg,#ff6b9a,#ff9a9e);
+  color:white;
+  cursor:pointer;
+  font-size:16px;
+  transition:0.3s;
+}
+button:hover{
+  transform:scale(1.08);
 }
 
 /* ---------- ENVELOPE ---------- */
-.envelope-wrapper {
-  perspective: 1000px;
-  margin-top: 30px;
+.envelope-container{
+  margin-top:40px;
+  display:flex;
+  justify-content:center;
 }
 
-.envelope {
-  width: 250px;
-  height: 160px;
-  background: #ff9a9e;
-  position: relative;
-  margin: auto;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: transform 1s;
+.envelope{
+  position:relative;
+  width:260px;
+  height:170px;
+  cursor:pointer;
 }
 
-.flap {
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-left: 125px solid transparent;
-  border-right: 125px solid transparent;
-  border-bottom: 80px solid #ff6b9a;
-  top: -80px;
-  left: 0;
-  transform-origin: bottom;
-  transition: transform 1s;
+.envelope-body{
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:#ff9a9e;
+  border-radius:10px;
+  z-index:1;
 }
 
-.letter {
-  position: absolute;
-  width: 220px;
-  height: 120px;
-  background: white;
-  top: 20px;
-  left: 15px;
-  border-radius: 10px;
-  padding: 15px;
-  color: #333;
-  transform: translateY(40px);
-  transition: 1s;
-  opacity: 0;
+.envelope-flap{
+  position:absolute;
+  width:100%;
+  height:85px;
+  background:#ff6b9a;
+  clip-path:polygon(0 0, 50% 100%, 100% 0);
+  top:0;
+  transform-origin:top;
+  transition:0.8s;
+  z-index:3;
 }
 
-/* เปิดซอง */
-.open .flap {
-  transform: rotateX(180deg);
+.letter{
+  position:absolute;
+  width:85%;
+  height:120px;
+  background:white;
+  left:7.5%;
+  top:25px;
+  border-radius:10px;
+  padding:15px;
+  box-sizing:border-box;
+  color:#333;
+  text-align:center;
+  transform:translateY(40px);
+  transition:0.8s;
+  opacity:0;
+  z-index:2;
 }
 
-.open .letter {
-  transform: translateY(-60px);
-  opacity: 1;
+.open .envelope-flap{
+  transform:rotateX(180deg);
 }
 
-/* floating hearts */
-.heart {
-  position: absolute;
-  bottom: -20px;
-  font-size: 20px;
-  animation: float 6s linear infinite;
-  opacity: 0.6;
+.open .letter{
+  transform:translateY(-60px);
+  opacity:1;
 }
-@keyframes float {
-  to { transform: translateY(-110vh); opacity: 0;}
+
+/* ---------- FLOWER ---------- */
+
+.flower-wrapper{
+  position:absolute;
+  bottom:-150px;
+  left:50%;
+  transform:translateX(-50%);
+  opacity:0;
+  transition:1.5s ease;
 }
+
+.flower{
+  position:relative;
+  width:120px;
+  height:200px;
+}
+
+/* ก้าน */
+.stem{
+  position:absolute;
+  width:6px;
+  height:150px;
+  background:#3cb371;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  border-radius:3px;
+}
+
+/* ใบ */
+.leaf{
+  position:absolute;
+  width:50px;
+  height:25px;
+  background:#2e8b57;
+  border-radius:50px 50px 0 50px;
+}
+
+.leaf.left{
+  bottom:70px;
+  left:10px;
+  transform:rotate(-30deg);
+}
+
+.leaf.right{
+  bottom:90px;
+  right:10px;
+  transform:rotate(30deg);
+}
+
+/* กลีบดอก */
+.petal{
+  position:absolute;
+  width:40px;
+  height:40px;
+  background:#ff4d6d;
+  border-radius:50%;
+  top:0;
+  left:50%;
+  transform-origin:center bottom;
+}
+
+.petal:nth-child(4){ transform:translate(-50%,0) rotate(0deg) translateY(-30px);}
+.petal:nth-child(5){ transform:translate(-50%,0) rotate(60deg) translateY(-30px);}
+.petal:nth-child(6){ transform:translate(-50%,0) rotate(120deg) translateY(-30px);}
+.petal:nth-child(7){ transform:translate(-50%,0) rotate(180deg) translateY(-30px);}
+.petal:nth-child(8){ transform:translate(-50%,0) rotate(240deg) translateY(-30px);}
+.petal:nth-child(9){ transform:translate(-50%,0) rotate(300deg) translateY(-30px);}
+
+/* เกสร */
+.center{
+  position:absolute;
+  width:25px;
+  height:25px;
+  background:gold;
+  border-radius:50%;
+  top:15px;
+  left:50%;
+  transform:translateX(-50%);
+}
+
+/* ตอนโผล่ */
+.show-flower{
+  bottom:-20px;
+  opacity:1;
+}
+
 </style>
 </head>
 
@@ -155,80 +224,82 @@ button:hover {
 
 <script>
 
-let step = 0;
+let step=0;
 
-function render() {
-  const content = document.getElementById("content");
+function render(){
+  const content=document.getElementById("content");
   content.classList.remove("fade");
   void content.offsetWidth;
   content.classList.add("fade");
 
-  let html = "";
+  let html="";
 
-  if(step === 0){
-    html = `<h1>ช่วงนี้เหนื่อยมั้ย 🌙</h1>
-            <p>เห็นตั้งใจมากเลยนะ</p>`;
+  if(step===0){
+    html=`<h1>ช่วงนี้เหนื่อยมั้ย 🌙</h1>
+          <p>เห็นตั้งใจมากเลยนะ</p>`;
   }
-  else if(step === 1){
-    html = `<h1>พรุ่งนี้ก็นำเสนอแล้ว ✨</h1>
-            <p>เก่งมากเลย รู้มั้ย</p>`;
+  else if(step===1){
+    html=`<h1>พรุ่งนี้ก็นำเสนอแล้ว ✨</h1>
+          <p>เก่งมากเลย รู้มั้ย</p>`;
   }
-  else if(step === 2){
-    html = `<h1>เลยมีอะไรจะให้ 💖</h1>`;
+  else if(step===2){
+    html=`<h1>เลยมีอะไรจะให้ 💌</h1>
+          <p>กดดูหน้าถัดไปนะ</p>`;
   }
-  else if(step === 3){
-    html = `
-      <h1>กดเปิดดูสิ 💌</h1>
-      <div class="envelope-wrapper">
-        <div class="envelope" onclick="openLetter(this)">
-          <div class="flap"></div>
+  else if(step===3){
+    html=`
+      <h1>กดเปิดดูสิ 💖</h1>
+
+      <div class="envelope-container">
+        <div class="envelope" onclick="openEnvelope(this)">
+          <div class="envelope-body"></div>
+          <div class="envelope-flap"></div>
           <div class="letter">
             Happy Valentine's Day 💕<br><br>
             ขอให้ยิ้มเยอะ ๆ นะ ✨
           </div>
         </div>
       </div>
+
+      <div class="flower-wrapper" id="flower">
+        <div class="flower">
+          <div class="stem"></div>
+          <div class="leaf left"></div>
+          <div class="leaf right"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="petal"></div>
+          <div class="center"></div>
+        </div>
+      </div>
     `;
   }
 
-  if(step < 3){
-    html += `<button onclick="next()">ถัดไป ➜</button>`;
+  if(step<3){
+    html+=`<button onclick="next()">ถัดไป ➜</button>`;
   }
 
-  content.innerHTML = html;
+  content.innerHTML=html;
 }
 
 function next(){
-  if(step < 3){
+  if(step<3){
     step++;
     render();
   }
 }
 
-function openLetter(el){
+function openEnvelope(el){
   el.classList.toggle("open");
-}
 
-/* สร้างดาว */
-for(let i=0;i<80;i++){
-  const star = document.createElement("div");
-  star.className="star";
-  star.style.top=Math.random()*100+"vh";
-  star.style.left=Math.random()*100+"vw";
-  star.style.animationDuration=(2+Math.random()*3)+"s";
-  document.body.appendChild(star);
+  const flower=document.getElementById("flower");
+  setTimeout(()=>{
+    flower.classList.toggle("show-flower");
+  },400);
 }
-
-/* หัวใจลอย */
-function createHeart(){
-  const h=document.createElement("div");
-  h.className="heart";
-  h.innerHTML="💖";
-  h.style.left=Math.random()*100+"vw";
-  document.body.appendChild(h);
-  setTimeout(()=>h.remove(),6000);
-}
-setInterval(createHeart,1000);
 
 render();
 
