@@ -5,125 +5,153 @@
 <title>For You 💖</title>
 
 <style>
-
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  background: radial-gradient(circle at top, #1a1a2e, #0f0f1a 70%);
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   overflow: hidden;
+  color: white;
 }
 
-/* Floating hearts */
+/* ดาวพื้นหลัง */
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: twinkle 3s infinite alternate;
+}
+@keyframes twinkle {
+  from { opacity: 0.2; }
+  to { opacity: 1; }
+}
+
+/* กล่องหลัก */
+.container {
+  background: rgba(255,255,255,0.07);
+  backdrop-filter: blur(20px);
+  width: 90%;
+  max-width: 600px;
+  padding: 50px;
+  border-radius: 25px;
+  text-align: center;
+  box-shadow: 0 0 40px rgba(255,100,150,0.4);
+  transition: 0.6s;
+  position: relative;
+}
+
+/* animation */
+.fade {
+  animation: fade 0.6s ease;
+}
+@keyframes fade {
+  from { opacity: 0; transform: translateY(20px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+
+h1 {
+  color: #ff6b9a;
+  font-size: 28px;
+}
+
+p {
+  color: #ddd;
+  font-size: 18px;
+}
+
+button {
+  margin-top: 20px;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 30px;
+  background: linear-gradient(45deg,#ff6b9a,#ff9a9e);
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s;
+}
+button:hover {
+  transform: scale(1.1);
+}
+
+/* ---------- ENVELOPE ---------- */
+.envelope-wrapper {
+  perspective: 1000px;
+  margin-top: 30px;
+}
+
+.envelope {
+  width: 250px;
+  height: 160px;
+  background: #ff9a9e;
+  position: relative;
+  margin: auto;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 1s;
+}
+
+.flap {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 125px solid transparent;
+  border-right: 125px solid transparent;
+  border-bottom: 80px solid #ff6b9a;
+  top: -80px;
+  left: 0;
+  transform-origin: bottom;
+  transition: transform 1s;
+}
+
+.letter {
+  position: absolute;
+  width: 220px;
+  height: 120px;
+  background: white;
+  top: 20px;
+  left: 15px;
+  border-radius: 10px;
+  padding: 15px;
+  color: #333;
+  transform: translateY(40px);
+  transition: 1s;
+  opacity: 0;
+}
+
+/* เปิดซอง */
+.open .flap {
+  transform: rotateX(180deg);
+}
+
+.open .letter {
+  transform: translateY(-60px);
+  opacity: 1;
+}
+
+/* floating hearts */
 .heart {
   position: absolute;
   bottom: -20px;
   font-size: 20px;
-  animation: floatUp 6s linear infinite;
+  animation: float 6s linear infinite;
   opacity: 0.6;
 }
-
-@keyframes floatUp {
-  0% { transform: translateY(0) scale(1); opacity: 0.6; }
-  100% { transform: translateY(-110vh) scale(1.5); opacity: 0; }
+@keyframes float {
+  to { transform: translateY(-110vh); opacity: 0;}
 }
-
-.container {
-  background: rgba(255,255,255,0.95);
-  width: 85%;
-  max-width: 600px;
-  padding: 50px;
-  border-radius: 30px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-  text-align: center;
-  transition: 0.5s ease;
-  position: relative;
-}
-
-/* Fade + Slide Animation */
-.fade-out {
-  opacity: 0;
-  transform: translateY(20px);
-}
-
-.fade-in {
-  animation: fadeSlide 0.6s ease forwards;
-}
-
-@keyframes fadeSlide {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-h1 {
-  font-size: 28px;
-  color: #ff4d6d;
-  animation: pop 0.4s ease;
-}
-
-@keyframes pop {
-  0% { transform: scale(0.8); }
-  100% { transform: scale(1); }
-}
-
-p {
-  font-size: 18px;
-  color: #555;
-}
-
-.buttons {
-  margin-top: 30px;
-}
-
-button {
-  padding: 12px 25px;
-  font-size: 16px;
-  border: none;
-  border-radius: 25px;
-  margin: 5px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.next {
-  background: #ff4d6d;
-  color: white;
-  box-shadow: 0 5px 15px rgba(255,77,109,0.4);
-}
-
-.next:hover {
-  transform: scale(1.1);
-}
-
-.back {
-  background: #eee;
-}
-
-.back:hover {
-  transform: scale(1.05);
-}
-
-img {
-  margin-top: 20px;
-  width: 220px;
-  border-radius: 20px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-  transition: 0.4s;
-}
-
-img:hover {
-  transform: scale(1.05);
-}
-
 </style>
 </head>
 
 <body>
 
-<div class="container fade-in" id="content"></div>
+<div class="container fade" id="content"></div>
 
 <script>
 
@@ -131,85 +159,76 @@ let step = 0;
 
 function render() {
   const content = document.getElementById("content");
+  content.classList.remove("fade");
+  void content.offsetWidth;
+  content.classList.add("fade");
 
-  content.classList.remove("fade-in");
-  content.classList.add("fade-out");
+  let html = "";
 
-  setTimeout(() => {
-
-    let html = "";
-
-    if(step === 0) {
-      html = `<h1>ช่วงนี้เหนื่อยมั้ย 🌤️</h1>`;
-    }
-
-    else if(step === 1) {
-      html = `<h1>เห็นทำงานดึกทุกวันเลยนะ 🌙</h1>`;
-    }
-
-    else if(step === 2) {
-      html = `
-        <h1>พรุ่งนี้ก็นำเสนอโครงงานแล้ว ✨</h1>
-        <p>สู้ ๆ นะ ตั้งใจมากเลย</p>
-      `;
-    }
-
-    else if(step === 3) {
-      html = `
-        <h1>เลยซื้อของขวัญเล็ก ๆ มาฝากกก 🎁</h1>
-        <img src="gift.jpg">
-        <p>เล็ก ๆ น้อย ๆ แต่ตั้งใจมากนะ</p>
-      `;
-    }
-
-    else if(step === 4) {
-      html = `
-        <h1>Happy Valentine ล่วงหน้านะ 💕</h1>
-        <p>พี่ไม่อยู่โรงเรียนเลยฝากเพื่อนมาให้นะ</p>
-        <p>อย่าลืมพักผ่อนนะะะ ดูแลตัวเองด้วยนะ 🌷</p>
-      `;
-    }
-
-    html += `
-      <div class="buttons">
-        ${step > 0 ? '<button class="back" onclick="back()">ย้อนกลับ</button>' : ''}
-        ${step < 4 ? '<button class="next" onclick="next()">ถัดไป ➜</button>' : ''}
+  if(step === 0){
+    html = `<h1>ช่วงนี้เหนื่อยมั้ย 🌙</h1>
+            <p>เห็นตั้งใจมากเลยนะ</p>`;
+  }
+  else if(step === 1){
+    html = `<h1>พรุ่งนี้ก็นำเสนอแล้ว ✨</h1>
+            <p>เก่งมากเลย รู้มั้ย</p>`;
+  }
+  else if(step === 2){
+    html = `<h1>เลยมีอะไรจะให้ 💖</h1>`;
+  }
+  else if(step === 3){
+    html = `
+      <h1>กดเปิดดูสิ 💌</h1>
+      <div class="envelope-wrapper">
+        <div class="envelope" onclick="openLetter(this)">
+          <div class="flap"></div>
+          <div class="letter">
+            Happy Valentine's Day 💕<br><br>
+            ขอให้ยิ้มเยอะ ๆ นะ ✨
+          </div>
+        </div>
       </div>
     `;
+  }
 
-    content.innerHTML = html;
+  if(step < 3){
+    html += `<button onclick="next()">ถัดไป ➜</button>`;
+  }
 
-    content.classList.remove("fade-out");
-    content.classList.add("fade-in");
-
-  }, 300);
+  content.innerHTML = html;
 }
 
-function next() {
-  if(step < 4) step++;
-  render();
+function next(){
+  if(step < 3){
+    step++;
+    render();
+  }
 }
 
-function back() {
-  if(step > 0) step--;
-  render();
+function openLetter(el){
+  el.classList.toggle("open");
 }
 
-/* Create floating hearts */
-function createHeart() {
-  const heart = document.createElement("div");
-  heart.classList.add("heart");
-  heart.innerHTML = "💖";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = (15 + Math.random() * 25) + "px";
-  document.body.appendChild(heart);
-
-  setTimeout(() => {
-    heart.remove();
-  }, 6000);
+/* สร้างดาว */
+for(let i=0;i<80;i++){
+  const star = document.createElement("div");
+  star.className="star";
+  star.style.top=Math.random()*100+"vh";
+  star.style.left=Math.random()*100+"vw";
+  star.style.animationDuration=(2+Math.random()*3)+"s";
+  document.body.appendChild(star);
 }
 
-setInterval(createHeart, 800);
+/* หัวใจลอย */
+function createHeart(){
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="💖";
+  h.style.left=Math.random()*100+"vw";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+}
+setInterval(createHeart,1000);
 
 render();
 
