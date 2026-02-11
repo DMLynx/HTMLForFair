@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>For You 💌</title>
+<style>
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background: linear-gradient(135deg, #ffd1dc, #c2e9fb);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.card {
+  background: white;
+  width: 340px;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  text-align: center;
+}
+
+h2 {
+  color: #444;
+}
+
+p {
+  color: #555;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 20px;
+  background: #ff8fab;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+.fade {
+  animation: fade 0.4s ease-in-out;
+}
+
+@keyframes fade {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="card fade" id="content">
+  <h2>ช่วงนี้เหนื่อยมั้ย 🌤️</h2>
+  <button onclick="next()">ถัดไป ➜</button>
+</div>
+
+<script>
+let step = 0;
+
+function next() {
+  const content = document.getElementById("content");
+  content.classList.remove("fade");
+  void content.offsetWidth;
+  content.classList.add("fade");
+
+  step++;
+
+  if(step === 1) {
+    content.innerHTML = `
+      <h2>เห็นทำงานดึกทุกวันเลยนะ 🌙</h2>
+      <button onclick="next()">ถัดไป ➜</button>
+    `;
+  }
+
+  else if(step === 2) {
+    content.innerHTML = `
+      <h2>พรุ่งนี้ก็นำเสนอโครงงานแล้ว</h2>
+      <p>ตั้งใจมาก ๆ เลย สู้ ๆ นะ ✨</p>
+      <button onclick="next()">ถัดไป ➜</button>
+    `;
+  }
+
+  else if(step === 3) {
+    content.innerHTML = `
+      <h2>เลยซื้อของขวัญเล็ก ๆ มาฝากกก 🎁</h2>
+      <p>เล็ก ๆ น้อย ๆ แต่ตั้งใจนะ</p>
+      <button onclick="next()">ถัดไป ➜</button>
+    `;
+  }
+
+  else if(step === 4) {
+    content.innerHTML = `
+      <h2>Happy Valentine ล่วงหน้านะ 💕</h2>
+      <p>พี่ไม่อยู่โรงเรียนเลยฝากเพื่อนมาให้นะ</p>
+      <p style="font-size:14px;">อย่าลืมพักผ่อนนะะะ ดูแลตัวเองด้วยนะ 🌷</p>
+    `;
+  }
+}
+</script>
+
+</body>
+</html>
