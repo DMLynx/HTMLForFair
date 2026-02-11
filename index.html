@@ -16,7 +16,7 @@ body{
   color:white;
 }
 
-/* กล่องหลัก */
+/* Container */
 .container{
   width:90%;
   max-width:600px;
@@ -28,7 +28,6 @@ body{
   text-align:center;
 }
 
-/* layout */
 .final-scene{
   display:flex;
   flex-direction:column;
@@ -53,6 +52,10 @@ button{
   color:white;
   cursor:pointer;
   font-size:16px;
+  transition:0.3s;
+}
+button:hover{
+  transform:scale(1.08);
 }
 
 /* ---------- ENVELOPE ---------- */
@@ -61,6 +64,7 @@ button{
   width:260px;
   height:170px;
   cursor:pointer;
+  perspective:1000px;
 }
 
 .envelope-body{
@@ -87,19 +91,22 @@ button{
 .letter{
   position:absolute;
   width:85%;
-  height:120px;
+  min-height:100px;
   background:white;
   left:7.5%;
   top:25px;
-  border-radius:10px;
-  padding:15px;
+  border-radius:12px;
+  padding:20px;
   box-sizing:border-box;
   color:#333;
   text-align:center;
+  line-height:1.6;
+  font-size:15px;
   transform:translateY(40px);
   transition:0.8s;
   opacity:0;
   z-index:2;
+  box-shadow:0 10px 25px rgba(0,0,0,0.15);
 }
 
 .open .envelope-flap{
@@ -107,7 +114,7 @@ button{
 }
 
 .open .letter{
-  transform:translateY(-60px);
+  transform:translateY(-80px);
   opacity:1;
 }
 
@@ -136,7 +143,7 @@ button{
   transform:translateY(0);
 }
 
-/* ก้าน */
+/* Stem */
 .stem{
   position:absolute;
   width:8px;
@@ -148,7 +155,7 @@ button{
   border-radius:4px;
 }
 
-/* ใบ */
+/* Leaves */
 .leaf{
   position:absolute;
   width:60px;
@@ -169,7 +176,7 @@ button{
   transform:rotate(30deg);
 }
 
-/* กลีบทานตะวัน */
+/* Petals */
 .petal{
   position:absolute;
   width:25px;
@@ -181,11 +188,16 @@ button{
   transform-origin:center 80px;
 }
 
-.petal:nth-child(n+4){
-  transform:translateX(-50%) rotate(calc((var(--i)) * 20deg));
+/* Generate rotation */
+.petal[data-i]{
+  transform:translateX(-50%) rotate(calc(attr(data-i number) * 20deg));
 }
 
-/* เกสร */
+/* Fallback for browser support */
+.petal{
+  transform:translateX(-50%);
+}
+
 .center{
   position:absolute;
   width:80px;
@@ -227,6 +239,11 @@ function render(){
           <button onclick="next()">ถัดไป ➜</button>`;
   }
   else if(step===3){
+    let petals="";
+    for(let i=0;i<18;i++){
+      petals+=`<div class="petal" style="transform:translateX(-50%) rotate(${i*20}deg)"></div>`;
+    }
+
     html=`
       <h1>กดเปิดดูสิ 💖</h1>
 
@@ -246,11 +263,7 @@ function render(){
             <div class="stem"></div>
             <div class="leaf left"></div>
             <div class="leaf right"></div>
-
-            ${[...Array(18)].map((_,i)=>
-              `<div class="petal" style="--i:${i}"></div>`
-            ).join("")}
-
+            ${petals}
             <div class="center"></div>
           </div>
         </div>
