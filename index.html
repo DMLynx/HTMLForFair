@@ -14,7 +14,6 @@ body{
   align-items:center;
   height:100vh;
   color:white;
-  overflow:hidden;
 }
 
 /* กล่องหลัก */
@@ -28,7 +27,6 @@ body{
   box-shadow:0 0 50px rgba(255,105,180,0.15);
   text-align:center;
   transition:0.5s;
-  position:relative;
 }
 
 .fade{
@@ -66,13 +64,16 @@ button:hover{
   transform:scale(1.08);
 }
 
-/* ---------- ENVELOPE ---------- */
-.envelope-container{
-  margin-top:40px;
+/* layout zone */
+.final-scene{
   display:flex;
-  justify-content:center;
+  flex-direction:column;
+  align-items:center;
+  gap:40px;
+  margin-top:30px;
 }
 
+/* ---------- ENVELOPE ---------- */
 .envelope{
   position:relative;
   width:260px;
@@ -131,18 +132,26 @@ button:hover{
 /* ---------- FLOWER ---------- */
 
 .flower-wrapper{
-  position:absolute;
-  bottom:-150px;
-  left:50%;
-  transform:translateX(-50%);
-  opacity:0;
-  transition:1.5s ease;
+  height:0;
+  overflow:hidden;
+  transition:1.2s ease;
+}
+
+.flower-wrapper.show{
+  height:220px;
 }
 
 .flower{
   position:relative;
   width:120px;
   height:200px;
+  margin:auto;
+  transform:translateY(200px);
+  transition:1.2s ease;
+}
+
+.flower-wrapper.show .flower{
+  transform:translateY(0);
 }
 
 /* ก้าน */
@@ -209,12 +218,6 @@ button:hover{
   transform:translateX(-50%);
 }
 
-/* ตอนโผล่ */
-.show-flower{
-  bottom:-20px;
-  opacity:1;
-}
-
 </style>
 </head>
 
@@ -250,7 +253,8 @@ function render(){
     html=`
       <h1>กดเปิดดูสิ 💖</h1>
 
-      <div class="envelope-container">
+      <div class="final-scene">
+
         <div class="envelope" onclick="openEnvelope(this)">
           <div class="envelope-body"></div>
           <div class="envelope-flap"></div>
@@ -259,21 +263,22 @@ function render(){
             ขอให้ยิ้มเยอะ ๆ นะ ✨
           </div>
         </div>
-      </div>
 
-      <div class="flower-wrapper" id="flower">
-        <div class="flower">
-          <div class="stem"></div>
-          <div class="leaf left"></div>
-          <div class="leaf right"></div>
-          <div class="petal"></div>
-          <div class="petal"></div>
-          <div class="petal"></div>
-          <div class="petal"></div>
-          <div class="petal"></div>
-          <div class="petal"></div>
-          <div class="center"></div>
+        <div class="flower-wrapper" id="flower">
+          <div class="flower">
+            <div class="stem"></div>
+            <div class="leaf left"></div>
+            <div class="leaf right"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="center"></div>
+          </div>
         </div>
+
       </div>
     `;
   }
@@ -294,11 +299,7 @@ function next(){
 
 function openEnvelope(el){
   el.classList.toggle("open");
-
-  const flower=document.getElementById("flower");
-  setTimeout(()=>{
-    flower.classList.toggle("show-flower");
-  },400);
+  document.getElementById("flower").classList.toggle("show");
 }
 
 render();
