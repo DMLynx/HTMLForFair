@@ -26,15 +26,15 @@ body{
   backdrop-filter:blur(25px);
   box-shadow:0 0 50px rgba(255,105,180,0.15);
   text-align:center;
-  transition:0.5s;
 }
 
-.fade{
-  animation:fade 0.6s ease;
-}
-@keyframes fade{
-  from{opacity:0;transform:translateY(20px);}
-  to{opacity:1;transform:translateY(0);}
+/* layout */
+.final-scene{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:40px;
+  margin-top:30px;
 }
 
 h1{
@@ -42,11 +42,6 @@ h1{
   background:linear-gradient(45deg,#ff6b9a,#ffc3a0);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-}
-
-p{
-  color:#ddd;
-  font-size:18px;
 }
 
 button{
@@ -58,19 +53,6 @@ button{
   color:white;
   cursor:pointer;
   font-size:16px;
-  transition:0.3s;
-}
-button:hover{
-  transform:scale(1.08);
-}
-
-/* layout zone */
-.final-scene{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:40px;
-  margin-top:30px;
 }
 
 /* ---------- ENVELOPE ---------- */
@@ -129,7 +111,7 @@ button:hover{
   opacity:1;
 }
 
-/* ---------- FLOWER ---------- */
+/* ---------- SUNFLOWER ---------- */
 
 .flower-wrapper{
   height:0;
@@ -138,84 +120,82 @@ button:hover{
 }
 
 .flower-wrapper.show{
-  height:220px;
+  height:260px;
 }
 
-.flower{
+.sunflower{
   position:relative;
-  width:120px;
-  height:200px;
+  width:150px;
+  height:250px;
   margin:auto;
-  transform:translateY(200px);
+  transform:translateY(250px);
   transition:1.2s ease;
 }
 
-.flower-wrapper.show .flower{
+.flower-wrapper.show .sunflower{
   transform:translateY(0);
 }
 
 /* ก้าน */
 .stem{
   position:absolute;
-  width:6px;
-  height:150px;
-  background:#3cb371;
+  width:8px;
+  height:170px;
+  background:#2e8b57;
   bottom:0;
   left:50%;
   transform:translateX(-50%);
-  border-radius:3px;
+  border-radius:4px;
 }
 
 /* ใบ */
 .leaf{
   position:absolute;
-  width:50px;
-  height:25px;
-  background:#2e8b57;
-  border-radius:50px 50px 0 50px;
+  width:60px;
+  height:30px;
+  background:#3cb371;
+  border-radius:60px 60px 0 60px;
 }
 
 .leaf.left{
-  bottom:70px;
+  bottom:90px;
   left:10px;
   transform:rotate(-30deg);
 }
 
 .leaf.right{
-  bottom:90px;
+  bottom:120px;
   right:10px;
   transform:rotate(30deg);
 }
 
-/* กลีบดอก */
+/* กลีบทานตะวัน */
 .petal{
   position:absolute;
-  width:40px;
-  height:40px;
-  background:#ff4d6d;
+  width:25px;
+  height:60px;
+  background:#ffcc00;
   border-radius:50%;
   top:0;
   left:50%;
-  transform-origin:center bottom;
+  transform-origin:center 80px;
 }
 
-.petal:nth-child(4){ transform:translate(-50%,0) rotate(0deg) translateY(-30px);}
-.petal:nth-child(5){ transform:translate(-50%,0) rotate(60deg) translateY(-30px);}
-.petal:nth-child(6){ transform:translate(-50%,0) rotate(120deg) translateY(-30px);}
-.petal:nth-child(7){ transform:translate(-50%,0) rotate(180deg) translateY(-30px);}
-.petal:nth-child(8){ transform:translate(-50%,0) rotate(240deg) translateY(-30px);}
-.petal:nth-child(9){ transform:translate(-50%,0) rotate(300deg) translateY(-30px);}
+.petal:nth-child(n+4){
+  transform:translateX(-50%) rotate(calc((var(--i)) * 20deg));
+}
 
 /* เกสร */
 .center{
   position:absolute;
-  width:25px;
-  height:25px;
-  background:gold;
+  width:80px;
+  height:80px;
+  background:#5a3e1b;
   border-radius:50%;
-  top:15px;
+  top:30px;
   left:50%;
   transform:translateX(-50%);
+  z-index:2;
 }
 
 </style>
@@ -223,7 +203,7 @@ button:hover{
 
 <body>
 
-<div class="container fade" id="content"></div>
+<div class="container" id="content"></div>
 
 <script>
 
@@ -231,23 +211,20 @@ let step=0;
 
 function render(){
   const content=document.getElementById("content");
-  content.classList.remove("fade");
-  void content.offsetWidth;
-  content.classList.add("fade");
 
   let html="";
 
   if(step===0){
     html=`<h1>ช่วงนี้เหนื่อยมั้ย 🌙</h1>
-          <p>เห็นตั้งใจมากเลยนะ</p>`;
+          <button onclick="next()">ถัดไป ➜</button>`;
   }
   else if(step===1){
     html=`<h1>พรุ่งนี้ก็นำเสนอแล้ว ✨</h1>
-          <p>เก่งมากเลย รู้มั้ย</p>`;
+          <button onclick="next()">ถัดไป ➜</button>`;
   }
   else if(step===2){
     html=`<h1>เลยมีอะไรจะให้ 💌</h1>
-          <p>กดดูหน้าถัดไปนะ</p>`;
+          <button onclick="next()">ถัดไป ➜</button>`;
   }
   else if(step===3){
     html=`
@@ -265,16 +242,15 @@ function render(){
         </div>
 
         <div class="flower-wrapper" id="flower">
-          <div class="flower">
+          <div class="sunflower">
             <div class="stem"></div>
             <div class="leaf left"></div>
             <div class="leaf right"></div>
-            <div class="petal"></div>
-            <div class="petal"></div>
-            <div class="petal"></div>
-            <div class="petal"></div>
-            <div class="petal"></div>
-            <div class="petal"></div>
+
+            ${[...Array(18)].map((_,i)=>
+              `<div class="petal" style="--i:${i}"></div>`
+            ).join("")}
+
             <div class="center"></div>
           </div>
         </div>
@@ -283,18 +259,12 @@ function render(){
     `;
   }
 
-  if(step<3){
-    html+=`<button onclick="next()">ถัดไป ➜</button>`;
-  }
-
   content.innerHTML=html;
 }
 
 function next(){
-  if(step<3){
-    step++;
-    render();
-  }
+  step++;
+  render();
 }
 
 function openEnvelope(el){
