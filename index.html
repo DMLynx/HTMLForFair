@@ -12,7 +12,7 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
-  height:100vh;
+  min-height:100vh;
   color:white;
 }
 
@@ -32,90 +32,75 @@ body{
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:40px;
-  margin-top:30px;
-}
-
-h1{
-  font-size:28px;
-  background:linear-gradient(45deg,#ff6b9a,#ffc3a0);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-
-button{
-  margin-top:30px;
-  padding:12px 30px;
-  border:none;
-  border-radius:30px;
-  background:linear-gradient(45deg,#ff6b9a,#ff9a9e);
-  color:white;
-  cursor:pointer;
-  font-size:16px;
-  transition:0.3s;
-}
-button:hover{
-  transform:scale(1.08);
+  gap:60px;
+  margin-top:40px;
 }
 
 /* ---------- ENVELOPE ---------- */
+
 .envelope{
   position:relative;
   width:260px;
-  height:170px;
+  height:200px; /* เพิ่มความสูง */
   cursor:pointer;
-  perspective:1000px;
 }
 
 .envelope-body{
   position:absolute;
+  bottom:0;
   width:100%;
-  height:100%;
+  height:150px;
   background:#ff9a9e;
-  border-radius:10px;
+  border-radius:0 0 12px 12px;
   z-index:1;
 }
 
 .envelope-flap{
   position:absolute;
   width:100%;
-  height:85px;
+  height:120px;
   background:#ff6b9a;
-  clip-path:polygon(0 0, 50% 100%, 100% 0);
+  clip-path:polygon(0 100%, 50% 0, 100% 100%);
   top:0;
   transform-origin:top;
   transition:0.8s;
   z-index:3;
 }
 
+/* Letter */
 .letter{
   position:absolute;
   width:85%;
-  min-height:100px;
   background:white;
   left:7.5%;
-  top:25px;
-  border-radius:12px;
+  bottom:20px;
+  border-radius:15px;
   padding:20px;
   box-sizing:border-box;
   color:#333;
   text-align:center;
   line-height:1.6;
   font-size:15px;
-  transform:translateY(40px);
   transition:0.8s;
-  opacity:0;
   z-index:2;
-  box-shadow:0 10px 25px rgba(0,0,0,0.15);
+  box-shadow:0 15px 30px rgba(0,0,0,0.2);
+  transform:translateY(30px);
 }
 
+/* Image inside letter */
+.letter img{
+  width:100%;
+  border-radius:10px;
+  margin-bottom:10px;
+}
+
+/* Open animation */
 .open .envelope-flap{
   transform:rotateX(180deg);
 }
 
 .open .letter{
-  transform:translateY(-80px);
-  opacity:1;
+  transform:translateY(-120px); /* เลื่อนขึ้น */
 }
 
 /* ---------- SUNFLOWER ---------- */
@@ -127,15 +112,15 @@ button:hover{
 }
 
 .flower-wrapper.show{
-  height:260px;
+  height:300px;
 }
 
 .sunflower{
   position:relative;
-  width:150px;
-  height:250px;
+  width:180px;
+  height:260px;
   margin:auto;
-  transform:translateY(250px);
+  transform:translateY(260px);
   transition:1.2s ease;
 }
 
@@ -146,32 +131,32 @@ button:hover{
 /* Stem */
 .stem{
   position:absolute;
-  width:8px;
-  height:170px;
+  width:10px;
+  height:180px;
   background:#2e8b57;
   bottom:0;
   left:50%;
   transform:translateX(-50%);
-  border-radius:4px;
+  border-radius:5px;
 }
 
 /* Leaves */
 .leaf{
   position:absolute;
-  width:60px;
-  height:30px;
+  width:70px;
+  height:35px;
   background:#3cb371;
-  border-radius:60px 60px 0 60px;
+  border-radius:70px 70px 0 70px;
 }
 
 .leaf.left{
-  bottom:90px;
+  bottom:100px;
   left:10px;
   transform:rotate(-30deg);
 }
 
 .leaf.right{
-  bottom:120px;
+  bottom:130px;
   right:10px;
   transform:rotate(30deg);
 }
@@ -179,35 +164,42 @@ button:hover{
 /* Petals */
 .petal{
   position:absolute;
-  width:25px;
-  height:60px;
+  width:35px;
+  height:80px;
   background:#ffcc00;
   border-radius:50%;
   top:0;
   left:50%;
-  transform-origin:center 80px;
-}
-
-/* Generate rotation */
-.petal[data-i]{
-  transform:translateX(-50%) rotate(calc(attr(data-i number) * 20deg));
-}
-
-/* Fallback for browser support */
-.petal{
-  transform:translateX(-50%);
+  transform-origin:center 100px;
 }
 
 .center{
   position:absolute;
-  width:80px;
-  height:80px;
+  width:100px;
+  height:100px;
   background:#5a3e1b;
   border-radius:50%;
-  top:30px;
+  top:40px;
   left:50%;
   transform:translateX(-50%);
   z-index:2;
+}
+
+button{
+  margin-top:30px;
+  padding:12px 30px;
+  border:none;
+  border-radius:30px;
+  background:linear-gradient(45deg,#ff6b9a,#ff9a9e);
+  color:white;
+  cursor:pointer;
+}
+
+h1{
+  font-size:28px;
+  background:linear-gradient(45deg,#ff6b9a,#ffc3a0);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
 
 </style>
@@ -239,6 +231,7 @@ function render(){
           <button onclick="next()">ถัดไป ➜</button>`;
   }
   else if(step===3){
+
     let petals="";
     for(let i=0;i<18;i++){
       petals+=`<div class="petal" style="transform:translateX(-50%) rotate(${i*20}deg)"></div>`;
@@ -252,8 +245,9 @@ function render(){
         <div class="envelope" onclick="openEnvelope(this)">
           <div class="envelope-body"></div>
           <div class="envelope-flap"></div>
+
           <div class="letter">
-            Happy Valentine's Day 💕<br><br>
+            <img src="your-image.jpg" alt="photo">
             ขอให้ยิ้มเยอะ ๆ นะ ✨
           </div>
         </div>
